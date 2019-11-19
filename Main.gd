@@ -8,3 +8,6 @@ func _ready():
 func _process(delta):
 	if Input.is_action_pressed("ui_quit"):
 		get_tree().quit()
+
+func _on_Player_dead():
+	print("player is dead")

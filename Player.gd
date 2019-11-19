@@ -7,13 +7,14 @@ var hp = 3;
 var shield = true;
 
 signal fire
+signal dead
 
 enum {UP,DOWN,LEFT,RIGHT}
 export var orientation = UP
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
+	$HullSprite.frame = 0
 
 func orientation_to_rotdegree(udlr : int) -> int:
 	match udlr:
@@ -30,6 +31,7 @@ func fire():
 	$FireTimer.start()
 	var launch_pos : Vector2 = position + Vector2(0,-launch_point_dist).rotated(deg2rad(rotation_degrees))
 	emit_signal("fire", launch_pos, rotation_degrees)
+	
 	
 func take_hit():
 	if not shield:
@@ -51,7 +53,10 @@ func take_damage():
 		die()
 
 func die():
-	print("dead.")
+	$ShieldTimer.stop()
+	shield = false
+	$ShieldSprite.visible = false
+	$DeathAnimation.play("death")
 
 
 func _process(delta):
@@ -76,12 +81,12 @@ func _process(delta):
 		
 	velocity = velocity.normalized()*speed
 	
-	move_and_collide(velocity)
+	if hp!=0:
+		move_and_collide(velocity)
+		rotation_degrees = orientation_to_rotdegree(orientation)
 	
-	rotation_degrees = orientation_to_rotdegree(orientation)
 	
-	
-	if (Input.is_action_pressed("ui_fire") and $FireTimer.is_stopped()):
+	if (Input.is_action_pressed("ui_fire") and $FireTimer.is_stopped() and hp!=0):
 		#$HullSprite.frame = ($HullSprite.frame+1)%3 # DELETE (was for testing)
 		fire()
 
@@ -91,4 +96,5 @@ func _on_ProjectileManager_body_harmed(body):
 		take_hit()
 
 
-
+func _on_DeathAnimation_animation_finished(anim_name):
+	emit_signal("dead")

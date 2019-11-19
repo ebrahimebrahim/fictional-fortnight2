@@ -1,10 +1,25 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://img/player_remake.png" type="Texture" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 26.2267, 21.5398 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "death"
+tracks/0/type = "value"
+tracks/0/path = NodePath("HullSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 4, 9 ]
+}
 
 [node name="Player" type="KinematicBody2D"]
 position = Vector2( -2.49701, 1.64001 )
@@ -17,6 +32,7 @@ __meta__ = {
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 2 )
 hframes = 10
+frame = 9
 
 [node name="ShieldSprite" type="Sprite" parent="."]
 scale = Vector2( 0.5, 0.5 )
@@ -34,4 +50,8 @@ one_shot = true
 [node name="ShieldTimer" type="Timer" parent="."]
 wait_time = 2.0
 one_shot = true
+
+[node name="DeathAnimation" type="AnimationPlayer" parent="."]
+anims/death = SubResource( 2 )
 [connection signal="timeout" from="ShieldTimer" to="." method="_on_ShieldTimer_timeout"]
+[connection signal="animation_finished" from="DeathAnimation" to="." method="_on_DeathAnimation_animation_finished"]
