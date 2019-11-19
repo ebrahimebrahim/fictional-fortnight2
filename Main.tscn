@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Main.gd" type="Script" id=1]
 [ext_resource path="res://Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://ProjectileManager.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Peupmissile.tscn" type="PackedScene" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 545, 10 )
@@ -16,6 +18,7 @@ script = ExtResource( 1 )
 position = Vector2( 226.451, 184.624 )
 
 [node name="Walls" type="StaticBody2D" parent="."]
+editor/display_folded = true
 
 [node name="TopWall" type="CollisionShape2D" parent="Walls"]
 position = Vector2( 500, -10 )
@@ -32,4 +35,9 @@ shape = SubResource( 2 )
 [node name="RightWall" type="CollisionShape2D" parent="Walls"]
 position = Vector2( 1034, 300 )
 shape = SubResource( 2 )
-[connection signal="fire" from="Player" to="." method="_on_Player_fire"]
+
+[node name="ProjectileManager" parent="." instance=ExtResource( 3 )]
+
+[node name="Peupmissile" parent="ProjectileManager" instance=ExtResource( 4 )]
+position = Vector2( 365, 385 )
+[connection signal="fire" from="Player" to="ProjectileManager" method="_on_Player_fire"]

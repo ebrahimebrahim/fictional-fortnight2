@@ -1,6 +1,8 @@
 extends KinematicBody2D
 
 var speed = 0.1
+var launch_point_dist = 50;
+
 signal fire
 
 enum {UP,DOWN,LEFT,RIGHT}
@@ -23,7 +25,8 @@ func orientation_to_rotdegree(udlr : int) -> int:
 
 func fire():
 	$FireTimer.start()
-	emit_signal("fire")
+	var launch_pos : Vector2 = position + Vector2(0,-launch_point_dist).rotated(deg2rad(rotation_degrees))
+	emit_signal("fire", launch_pos, rotation_degrees)
 
 func _process(delta):
 	var velocity = Vector2()

@@ -1,0 +1,67 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Peupmissile.gd" type="Script" id=1]
+[ext_resource path="res://img/missile_explode.png" type="Texture" id=2]
+[ext_resource path="res://img/missile.png" type="Texture" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 7.89844, 24.6502 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "peupmissile_animation"
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("MissileSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 1, 0 ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "explosion"
+tracks/0/type = "value"
+tracks/0/path = NodePath("ExplosionSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0, 11 ]
+}
+
+[node name="Peupmissile" type="KinematicBody2D"]
+position = Vector2( 55, 50 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="ExplosionSprite" type="Sprite" parent="."]
+visible = false
+texture = ExtResource( 2 )
+hframes = 12
+
+[node name="MissileHitbox" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="MissileSprite" type="Sprite" parent="."]
+texture = ExtResource( 3 )
+hframes = 2
+
+[node name="MissileAnimation" type="AnimationPlayer" parent="."]
+autoplay = "peupmissile_animation"
+anims/peupmissile_animation = SubResource( 2 )
+
+[node name="ExplosionAnimation" type="AnimationPlayer" parent="."]
+anims/explosion = SubResource( 3 )
+[connection signal="animation_finished" from="ExplosionAnimation" to="." method="_on_ExplosionAnimation_animation_finished"]
