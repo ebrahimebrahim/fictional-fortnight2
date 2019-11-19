@@ -40,7 +40,7 @@ tracks/0/keys = {
 }
 
 [sub_resource type="CircleShape2D" id=4]
-radius = 19.6567
+radius = 34.5559
 
 [node name="Peupmissile" type="KinematicBody2D"]
 position = Vector2( 50.7072, 42.996 )
@@ -51,8 +51,10 @@ __meta__ = {
 
 [node name="ExplosionSprite" type="Sprite" parent="."]
 visible = false
+scale = Vector2( 2, 2 )
 texture = ExtResource( 2 )
 hframes = 12
+frame = 2
 
 [node name="MissileHitbox" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
