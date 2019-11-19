@@ -30,4 +30,5 @@ func _on_ExplosionAnimation_animation_finished(anim_name):
 
 
 func _on_ExplosionArea_body_shape_entered(body_id, body, body_shape, area_shape):
-	emit_signal("body_harmed",body)
+	if $ExplosionSprite.frame < 6:
+		emit_signal("body_harmed",body)
