@@ -30,3 +30,8 @@ shape = SubResource( 1 )
 
 [node name="FireTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="ShieldTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+[connection signal="timeout" from="ShieldTimer" to="." method="_on_ShieldTimer_timeout"]

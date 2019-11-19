@@ -1,7 +1,10 @@
 extends KinematicBody2D
 
 var speed = 0.1
-var launch_point_dist = 50;
+const launch_point_dist = 50;
+
+var hp = 3;
+var shield = true;
 
 signal fire
 
@@ -27,6 +30,29 @@ func fire():
 	$FireTimer.start()
 	var launch_pos : Vector2 = position + Vector2(0,-launch_point_dist).rotated(deg2rad(rotation_degrees))
 	emit_signal("fire", launch_pos, rotation_degrees)
+	
+func take_hit():
+	if not shield:
+		take_damage()
+	else:
+		shield = false
+		$ShieldTimer.start()
+		$ShieldSprite.visible = false
+
+func _on_ShieldTimer_timeout():
+	$ShieldSprite.visible = true
+	shield = true
+
+func take_damage():
+	hp -= 1;
+	if hp > 0:
+		$HullSprite.frame = 3-hp
+	else:
+		die()
+
+func die():
+	print("dead.")
+
 
 func _process(delta):
 	var velocity = Vector2()
@@ -58,3 +84,11 @@ func _process(delta):
 	if (Input.is_action_pressed("ui_fire") and $FireTimer.is_stopped()):
 		#$HullSprite.frame = ($HullSprite.frame+1)%3 # DELETE (was for testing)
 		fire()
+
+
+func _on_ProjectileManager_body_harmed(body):
+	if body == self:
+		take_hit()
+
+
+

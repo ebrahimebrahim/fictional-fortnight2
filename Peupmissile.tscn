@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Peupmissile.gd" type="Script" id=1]
 [ext_resource path="res://img/missile_explode.png" type="Texture" id=2]
@@ -39,8 +39,11 @@ tracks/0/keys = {
 "values": [ 0, 11 ]
 }
 
+[sub_resource type="CircleShape2D" id=4]
+radius = 19.6567
+
 [node name="Peupmissile" type="KinematicBody2D"]
-position = Vector2( 55, 50 )
+position = Vector2( 50.7072, 42.996 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
@@ -64,4 +67,12 @@ anims/peupmissile_animation = SubResource( 2 )
 
 [node name="ExplosionAnimation" type="AnimationPlayer" parent="."]
 anims/explosion = SubResource( 3 )
+
+[node name="ExplosionArea" type="Area2D" parent="."]
+
+[node name="ExplosionHitbox" type="CollisionShape2D" parent="ExplosionArea"]
+position = Vector2( 2.03342, 0.451866 )
+shape = SubResource( 4 )
+disabled = true
 [connection signal="animation_finished" from="ExplosionAnimation" to="." method="_on_ExplosionAnimation_animation_finished"]
+[connection signal="body_shape_entered" from="ExplosionArea" to="." method="_on_ExplosionArea_body_shape_entered"]
