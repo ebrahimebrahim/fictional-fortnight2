@@ -1,10 +1,13 @@
 extends KinematicBody2D
 
-var speed = 0.1
-const launch_point_dist = 50;
+var speed = 400
+const launch_point_dist = 50; # how far in front of player to spawn peupmissile
 
 var hp = 3;
 var shield = true;
+var last_pos : Vector2
+var actual_velocity = Vector2()
+
 
 signal fire
 signal dead
@@ -30,7 +33,7 @@ func orientation_to_rotdegree(udlr : int) -> int:
 func fire():
 	$FireTimer.start()
 	var launch_pos : Vector2 = position + Vector2(0,-launch_point_dist).rotated(deg2rad(rotation_degrees))
-	emit_signal("fire", launch_pos, rotation_degrees)
+	emit_signal("fire", launch_pos, rotation_degrees, actual_velocity)
 	
 	
 func take_hit():
@@ -82,8 +85,12 @@ func _process(delta):
 	velocity = velocity.normalized()*speed
 	
 	if hp!=0:
-		move_and_collide(velocity)
+		move_and_collide(velocity*delta)
 		rotation_degrees = orientation_to_rotdegree(orientation)
+	
+	# update velocity
+	actual_velocity = (position-last_pos)/delta
+	last_pos = position
 	
 	
 	if (Input.is_action_pressed("ui_fire") and $FireTimer.is_stopped() and hp!=0):

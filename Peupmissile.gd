@@ -1,7 +1,8 @@
 extends KinematicBody2D
 
+var velocity_modifier : Vector2
 var detonated = false
-const speed = 0.05;
+const speed = 300;
 
 signal body_harmed
 
@@ -10,10 +11,16 @@ signal body_harmed
 func _ready():
 	pass # Replace with function body.
 
+func set_trajectory(pos,rot,velocity_modifier) :
+	self.velocity_modifier = velocity_modifier
+	position = pos
+	rotation_degrees = rot
+
 # Called every frame. 'delta' is the elapsed time since the previous frame
 func _process(delta):
 	if not detonated:
-		if move_and_collide(Vector2(0,-speed).rotated(deg2rad(rotation_degrees))) : explode()
+		if move_and_collide((Vector2(0,-speed).rotated(deg2rad(rotation_degrees)) + velocity_modifier)*delta):
+			explode()
 
 func explode():
 	detonated = true
