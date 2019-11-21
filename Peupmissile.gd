@@ -4,10 +4,6 @@ extends "res://Projectile.gd"
 func _ready():
 	speed = 300
 
-func set_trajectory(pos,rot,velocity_modifier) :
-	self.velocity_modifier = velocity_modifier
-	position = pos
-	rotation_degrees = rot
 
 # Called every frame. 'delta' is the elapsed time since the previous frame
 func _process(delta):

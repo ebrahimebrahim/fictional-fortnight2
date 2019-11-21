@@ -59,4 +59,9 @@ anims/idle = SubResource( 2 )
 
 [node name="ExplodeAnimation" type="AnimationPlayer" parent="."]
 anims/explode = SubResource( 3 )
+
+[node name="FireTimer" type="Timer" parent="."]
+wait_time = 1.87
+autostart = true
 [connection signal="animation_finished" from="ExplodeAnimation" to="." method="_on_ExplodeAnimation_animation_finished"]
+[connection signal="timeout" from="FireTimer" to="." method="_on_FireTimer_timeout"]
