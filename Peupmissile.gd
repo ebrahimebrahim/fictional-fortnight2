@@ -1,15 +1,8 @@
-extends KinematicBody2D
-
-var velocity_modifier : Vector2
-var detonated = false
-const speed = 300;
-
-signal body_harmed
-
+extends "res://Projectile.gd"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	speed = 300
 
 func set_trajectory(pos,rot,velocity_modifier) :
 	self.velocity_modifier = velocity_modifier
@@ -18,9 +11,8 @@ func set_trajectory(pos,rot,velocity_modifier) :
 
 # Called every frame. 'delta' is the elapsed time since the previous frame
 func _process(delta):
-	if not detonated:
-		if move_and_collide((Vector2(0,-speed).rotated(deg2rad(rotation_degrees)) + velocity_modifier)*delta):
-			explode()
+	# It seems that the parent class's _process automatically gets called even due to being "call_on_multilevel"
+	pass
 
 func explode():
 	detonated = true
