@@ -15,6 +15,10 @@ signal dead
 enum {UP,DOWN,LEFT,RIGHT}
 export var orientation = UP
 
+func is_dead() -> bool:
+	return hp<=0
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$HullSprite.frame = 0
@@ -99,7 +103,7 @@ func _process(delta):
 
 
 func _on_ProjectileManager_body_harmed(body):
-	if body == self:
+	if body == self and not is_dead():
 		take_hit()
 
 
