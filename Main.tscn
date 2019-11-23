@@ -45,3 +45,4 @@ script = ExtResource( 4 )
 [connection signal="fire" from="Player" to="ProjectileManager" method="_on_Player_fire"]
 [connection signal="fire" from="MonsterManager" to="ProjectileManager" method="_on_MonsterManager_fire"]
 [connection signal="body_harmed" from="ProjectileManager" to="Player" method="_on_ProjectileManager_body_harmed"]
+[connection signal="body_harmed" from="ProjectileManager" to="MonsterManager" method="_on_ProjectileManager_body_harmed"]
