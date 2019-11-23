@@ -39,10 +39,15 @@ shape = SubResource( 2 )
 [node name="MonsterManager" type="Node" parent="."]
 script = ExtResource( 3 )
 
+[node name="SpawnTimer" type="Timer" parent="MonsterManager"]
+wait_time = 2.0
+autostart = true
+
 [node name="ProjectileManager" type="Node" parent="."]
 script = ExtResource( 4 )
 [connection signal="dead" from="Player" to="." method="_on_Player_dead"]
 [connection signal="fire" from="Player" to="ProjectileManager" method="_on_Player_fire"]
 [connection signal="fire" from="MonsterManager" to="ProjectileManager" method="_on_MonsterManager_fire"]
+[connection signal="timeout" from="MonsterManager/SpawnTimer" to="MonsterManager" method="_on_SpawnTimer_timeout"]
 [connection signal="body_harmed" from="ProjectileManager" to="Player" method="_on_ProjectileManager_body_harmed"]
 [connection signal="body_harmed" from="ProjectileManager" to="MonsterManager" method="_on_ProjectileManager_body_harmed"]
