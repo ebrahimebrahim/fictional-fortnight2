@@ -18,5 +18,11 @@ func _on_ProjectileManager_body_harmed(body):
 func _on_SpawnTimer_timeout():
 	var gem = Gem.instance()
 	gem.connect("fire",self,"_on_gem_fire")
-	gem.position=Vector2(randi()%1024,randi()%600)
 	add_child(gem)
+	
+	var viewport_texture_size = get_viewport().get_texture().get_size().floor()
+	var pos : Vector2
+	while true :
+		pos = Vector2(randi()%int(viewport_texture_size.x),randi()%int(viewport_texture_size.y))
+		if not gem.test_move(Transform2D(0,pos),Vector2()) : break
+	gem.position=pos
