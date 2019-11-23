@@ -38,19 +38,25 @@ func fire():
 	$FireTimer.start()
 	var launch_pos : Vector2 = position + Vector2(0,-launch_point_dist).rotated(deg2rad(rotation_degrees))
 	emit_signal("fire", launch_pos, rotation_degrees, actual_velocity)
-	
-	
+
+func shield_up():
+	shield = true
+	$ShieldSprite.visible = true
+
+func shield_down():
+	shield = false
+	$ShieldSprite.visible = false
+
+
 func take_hit():
 	if not shield:
 		take_damage()
 	else:
-		shield = false
+		shield_down()
 		$ShieldTimer.start()
-		$ShieldSprite.visible = false
 
 func _on_ShieldTimer_timeout():
-	$ShieldSprite.visible = true
-	shield = true
+	shield_up()
 
 func take_damage():
 	hp -= 1;
@@ -61,8 +67,7 @@ func take_damage():
 
 func die():
 	$ShieldTimer.stop()
-	shield = false
-	$ShieldSprite.visible = false
+	shield_down()
 	$DeathAnimation.play("death")
 
 
@@ -88,7 +93,7 @@ func _process(delta):
 		
 	velocity = velocity.normalized()*speed
 	
-	if hp!=0:
+	if not is_dead():
 		move_and_collide(velocity*delta)
 		rotation_degrees = orientation_to_rotdegree(orientation)
 	
@@ -98,12 +103,13 @@ func _process(delta):
 	
 	
 	if (Input.is_action_pressed("ui_fire") and $FireTimer.is_stopped() and hp!=0):
-		#$HullSprite.frame = ($HullSprite.frame+1)%3 # DELETE (was for testing)
 		fire()
+	
 
 
 func _on_ProjectileManager_body_harmed(body):
-	if body == self and not is_dead():
+	if body == self and $HitCooldown.is_stopped() and not is_dead():
+		$HitCooldown.start()
 		take_hit()
 
 
