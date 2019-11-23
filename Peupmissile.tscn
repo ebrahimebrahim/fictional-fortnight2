@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://Peupmissile.gd" type="Script" id=1]
+[ext_resource path="res://Projectile.gd" type="Script" id=1]
 [ext_resource path="res://img/missile_explode.png" type="Texture" id=2]
 [ext_resource path="res://img/missile.png" type="Texture" id=3]
 
@@ -48,6 +48,8 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
 }
+speed = 300
+explosion_max_deadly_frame = 6.0
 
 [node name="ExplosionSprite" type="Sprite" parent="."]
 visible = false

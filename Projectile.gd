@@ -2,8 +2,8 @@ extends KinematicBody2D
 
 var velocity_modifier : Vector2
 var detonated = false
-var speed : int;
-var explosion_max_deadly_frame = INF
+export var speed : int;
+export var explosion_max_deadly_frame = INF
 
 signal body_harmed
 
