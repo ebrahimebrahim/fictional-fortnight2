@@ -15,7 +15,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="sdlremake1"
+config/name="fictional-fortnight2"
 run/main_scene="res://Main.tscn"
 config/icon="res://icon.png"
 
