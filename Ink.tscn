@@ -1,0 +1,80 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Projectile.gd" type="Script" id=1]
+[ext_resource path="res://img/monster2bullet_explode.png" type="Texture" id=2]
+[ext_resource path="res://img/monster2bullet.png" type="Texture" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 53.563, 27.8876 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "peupmissile_animation"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("MissileSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0, 5 ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "explosion"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("ExplosionSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0, 5 ]
+}
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 67.9294, 55.943 )
+
+[node name="Ink" type="KinematicBody2D"]
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+speed = 100
+
+[node name="ExplosionSprite" type="Sprite" parent="."]
+visible = false
+position = Vector2( 2.20062, 4.8414 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 2 )
+hframes = 6
+frame = 3
+
+[node name="MissileHitbox" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="MissileSprite" type="Sprite" parent="."]
+scale = Vector2( 2, 2 )
+texture = ExtResource( 3 )
+hframes = 6
+
+[node name="MissileAnimation" type="AnimationPlayer" parent="."]
+autoplay = "peupmissile_animation"
+anims/peupmissile_animation = SubResource( 2 )
+
+[node name="ExplosionAnimation" type="AnimationPlayer" parent="."]
+anims/explosion = SubResource( 3 )
+
+[node name="ExplosionArea" type="Area2D" parent="."]
+
+[node name="ExplosionHitbox" type="CollisionShape2D" parent="ExplosionArea"]
+position = Vector2( 0.183, 11.622 )
+shape = SubResource( 4 )
+disabled = true
