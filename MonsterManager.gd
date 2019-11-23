@@ -8,6 +8,7 @@ signal fire
 func _ready():
 	var test_gem = Gem.instance()
 	test_gem.connect("fire",self,"_on_gem_fire")
+	test_gem.position=Vector2(300,300)
 	add_child(test_gem)
 
 

@@ -44,7 +44,6 @@ tracks/0/keys = {
 extents = Vector2( 9.91235, 29.6698 )
 
 [node name="Shard" type="KinematicBody2D"]
-position = Vector2( 153.274, 111.188 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true

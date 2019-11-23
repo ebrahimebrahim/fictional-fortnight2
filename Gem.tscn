@@ -38,19 +38,19 @@ tracks/0/keys = {
 }
 
 [node name="Gem" type="KinematicBody2D"]
-position = Vector2( 221.311, 133.08 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 7.87595, 0 )
 scale = Vector2( 8, 8 )
 texture = ExtResource( 2 )
 hframes = 14
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
-position = Vector2( -8.64, 0 )
+position = Vector2( -0.764023, -0.463287 )
 shape = SubResource( 1 )
 
 [node name="IdleAnimation" type="AnimationPlayer" parent="."]
