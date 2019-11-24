@@ -4,7 +4,6 @@ var velocity_modifier : Vector2
 var detonated = false
 export var speed : int;
 export var explosion_max_deadly_frame = INF
-export var explosion_min_deadly_frame = -INF
 
 signal body_harmed
 
@@ -32,6 +31,8 @@ func explode():
 	$ExplosionSprite.visible=true
 	$ExplosionArea/ExplosionHitbox.disabled = false
 	$ExplosionAnimation.play("explosion")
+	for body in $ExplosionArea.get_overlapping_bodies():
+		emit_signal("body_harmed",body)
 	
 	
 func _on_ExplosionAnimation_animation_finished(anim_name):
@@ -39,5 +40,5 @@ func _on_ExplosionAnimation_animation_finished(anim_name):
 
 
 func _on_ExplosionArea_body_shape_entered(body_id, body, body_shape, area_shape):
-	if $ExplosionSprite.frame >= explosion_min_deadly_frame and $ExplosionSprite.frame <= explosion_max_deadly_frame:
+	if $ExplosionSprite.frame <= explosion_max_deadly_frame:
 		emit_signal("body_harmed",body)
