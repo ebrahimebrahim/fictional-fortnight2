@@ -1,0 +1,107 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Projectile.gd" type="Script" id=1]
+[ext_resource path="res://img/monster4bullet.png" type="Texture" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 15.7988, 181.512 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "peupmissile_animation"
+length = 0.2
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("MissileSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "explosion"
+length = 0.2
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("ExplosionSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.05, 0.1, 0.15 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 0, 1 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("ExplosionSprite:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.15 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.184314 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("ExplosionSprite:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.05, 0.1, 0.15 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1.5, 1.1 ), Vector2( 1.99, 1.1 ), Vector2( 0.59, 1.1 ), Vector2( 1.03, 1.1 ) ]
+}
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 23.4684, 201.18 )
+
+[node name="Bolt" type="KinematicBody2D"]
+position = Vector2( 480.533, 476.622 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+speed = 1000
+
+[node name="ExplosionSprite" type="Sprite" parent="."]
+position = Vector2( 3.25323, -185.685 )
+scale = Vector2( 1.5, 1.1 )
+texture = ExtResource( 2 )
+hframes = 2
+
+[node name="MissileHitbox" type="CollisionShape2D" parent="."]
+position = Vector2( 2.10522, -188.421 )
+shape = SubResource( 1 )
+
+[node name="MissileSprite" type="Sprite" parent="."]
+visible = false
+position = Vector2( 2.10522, -188.421 )
+texture = ExtResource( 2 )
+hframes = 2
+
+[node name="MissileAnimation" type="AnimationPlayer" parent="."]
+autoplay = "peupmissile_animation"
+anims/peupmissile_animation = SubResource( 2 )
+
+[node name="ExplosionAnimation" type="AnimationPlayer" parent="."]
+anims/explosion = SubResource( 3 )
+
+[node name="ExplosionArea" type="Area2D" parent="."]
+position = Vector2( 2.10522, -188.421 )
+
+[node name="ExplosionHitbox" type="CollisionShape2D" parent="ExplosionArea"]
+position = Vector2( 0.183, 6.742 )
+shape = SubResource( 4 )
+disabled = true

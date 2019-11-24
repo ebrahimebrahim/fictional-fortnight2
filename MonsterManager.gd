@@ -9,7 +9,10 @@ const Ink = preload("res://Ink.tscn")
 const Mushy = preload("res://Mushy.tscn")
 const Spore = preload("res://Spore.tscn")
 
-const monster_to_projectile = {Gem:Shard, Octo:Ink, Mushy:Spore}
+const Zapp = preload("res://Zapp.tscn")
+const Bolt = preload("res://Bolt.tscn")
+
+const monster_to_projectile = {Gem:Shard, Octo:Ink, Mushy:Spore, Zapp:Bolt}
 var monster_list = monster_to_projectile.keys()
 
 signal fire
